@@ -4,6 +4,7 @@ from flask import Flask, request
 
 from db import Base, engine
 from resources.elderly import Elderly
+from resources.caregiver import Caregiver
 # from resources.status import Status
 
 app = Flask(__name__)
@@ -16,6 +17,10 @@ def create_elderly():
     req_data = request.get_json()
     return Elderly.create(req_data)
 
+@app.route('/addcaregiver', methods=['POST'])
+def create_caregiver():
+    req_data = request.get_json()
+    return Caregiver.create(req_data)
 
 # @app.route('/deliveries/<d_id>', methods=['GET'])
 # def get_elderly(d_id):
