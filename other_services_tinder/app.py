@@ -27,10 +27,18 @@ def create_caregiver():
 #     return Elderly.get(d_id)
 
 
+# TODO: i think we can use this to update the hobbies of the elderly: Jessie
 # @app.route('/deliveries/<d_id>/status', methods=['PUT'])
 # def update_elderly_status(d_id):
 #     status = request.args.get('status')
 #     return Status.update(d_id, status)
+
+# TODO: i think we can use this to update the hobbies of the elderly: Aurelia
+# @app.route('/deliveries/<d_id>/status', methods=['PUT'])
+# def update_elderly_status(d_id):
+#     status = request.args.get('status')
+#     return Status.update(d_id, status)
+
 
 
 # @app.route('/deliveries/<d_id>', methods=['DELETE'])
