@@ -4,4 +4,3 @@ sqlalchemy-utils
 sqlalchemy-bigquery
 random
 json
-pytest
