@@ -45,13 +45,14 @@ class Elderly:
     #         session.close()
     #         return jsonify({'message': f'There is no elderly with id {d_id}'}), 404
 
-    # @staticmethod
-    # def delete(d_id):
-    #     session = Session()
-    #     effected_rows = session.query(ElderlyDAO).filter(ElderlyDAO.id == d_id).delete()
-    #     session.commit()
-    #     session.close()
-    #     if effected_rows == 0:
-    #         return jsonify({'message': f'There is no elderly with id {d_id}'}), 404
-    #     else:
-    #         return jsonify({'message': 'The elderly was removed'}), 200
+    #Onno: I changed the id's to elderly_id, renamed the DAO to ElderlyDAO and added a delete function to app.py
+    @staticmethod
+    def delete(d_id):
+        session = Session()
+        effected_rows = session.query(ElderlyDAO).filter(ElderlyDAO.elderly_id == d_id).delete()
+        session.commit()
+        session.close()
+        if effected_rows == 0:
+            return jsonify({'message': f'There is no elderly user with id {d_id}'}), 404
+        else:
+            return jsonify({'message': 'The elderly user was removed'}), 200

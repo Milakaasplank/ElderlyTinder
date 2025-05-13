@@ -45,13 +45,14 @@ class Caregiver:
     #         session.close()
     #         return jsonify({'message': f'There is no caregiver with id {d_id}'}), 404
 
-    # @staticmethod
-    # def delete(d_id):
-    #     session = Session()
-    #     effected_rows = session.query(caregiverDAO).filter(caregiverDAO.id == d_id).delete()
-    #     session.commit()
-    #     session.close()
-    #     if effected_rows == 0:
-    #         return jsonify({'message': f'There is no caregiver with id {d_id}'}), 404
-    #     else:
-    #         return jsonify({'message': 'The caregiver was removed'}), 200
+    #Onno: I changed the id's to caregiver_id, renamed the DAO to CaregiverDAO and added a delete function to app.py
+    @staticmethod
+    def delete(d_id):
+        session = Session()
+        effected_rows = session.query(CaregiverDAO).filter(CaregiverDAO.caregiver_id == d_id).delete()
+        session.commit()
+        session.close()
+        if effected_rows == 0:
+            return jsonify({'message': f'There is no caregiver with id {d_id}'}), 404
+        else:
+            return jsonify({'message': 'The caregiver was removed'}), 200
