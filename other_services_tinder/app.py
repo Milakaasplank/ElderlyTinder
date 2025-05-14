@@ -40,11 +40,14 @@ def create_caregiver():
 #     return Status.update(d_id, status)
 
 
+# --> Remove Elderly and Caregiver (by Onno), it says theres no delete function in Elderly and Caregiver but there definitely is.
+@app.route('/elderly/<elderly_id>', methods=['DELETE'])
+def delete_elderly(elderly_id):
+    return Elderly.delete(elderly_id)
 
-# @app.route('/deliveries/<d_id>', methods=['DELETE'])
-# def delete_elderly(d_id):
-#     return Elderly.delete(d_id)
-
+@app.route('/caregiver/<caregiver_id>', methods=['DELETE'])
+def delete_caregiver(caregiver_id):
+    return Caregiver.delete(caregiver_id)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
