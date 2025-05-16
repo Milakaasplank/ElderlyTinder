@@ -22,10 +22,13 @@ def create_caregiver():
     req_data = request.get_json()
     return Caregiver.create(req_data)
 
-# @app.route('/deliveries/<d_id>', methods=['GET'])
-# def get_elderly(d_id):
-#     return Elderly.get(d_id)
+@app.route('/getelderly/<d_id>', methods=['GET'])
+def get_elderly(d_id):
+    return Elderly.get(d_id)
 
+@app.route('/getcaregiver/<d_id>', methods=['GET'])
+def get_caregiver(d_id):
+    return Caregiver.get(d_id)
 
 # TODO: i think we can use this to update the hobbies of the elderly: Jessie
 # @app.route('/deliveries/<d_id>/status', methods=['PUT'])
