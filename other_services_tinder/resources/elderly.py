@@ -12,38 +12,34 @@ class Elderly:
     @staticmethod
     def create(body):
         session = Session()
-        elderly = ElderlyDAO(body['elderly_id'], body['name'], body['emailaddress'], body['password'])
+        elderly = ElderlyDAO(body['elderly_id'], body['name'], body['emailaddress'], body['password'], body['hobbies'])
         session.add(elderly)
         session.commit()
         session.refresh(elderly)
         session.close()
         return jsonify({'elderly_id': elderly.elderly_id}), 200
 
-    # @staticmethod
-    # def get(d_id):
-    #     session = Session()
-    #     # https://docs.sqlalchemy.org/en/14/orm/query.html
-    #     # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-    #     elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == d_id).first()
+    @staticmethod
+    def get(d_id):
+        session = Session()
+        # https://docs.sqlalchemy.org/en/14/orm/query.html
+        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
+        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == d_id).first()
 
-    #     if elderly:
-    #         status_obj = elderly.status
-    #         text_out = {
-    #             "elderly_id:": elderly.elderly_id,
-    #             "name": elderly.name,
-    #             "emailaddress": elderly.emailaddress,
-    #             "order_time": elderly.order_time.isoformat(),
-    #             "elderly_time": elderly.elderly_time.isoformat(),
-    #             "status": {
-    #                 "status": status_obj.status,
-    #                 "last_update": status_obj.last_update.isoformat(),
-    #             }
-    #         }
-    #         session.close()
-    #         return jsonify(text_out), 200
-    #     else:
-    #         session.close()
-    #         return jsonify({'message': f'There is no elderly with id {d_id}'}), 404
+        if elderly:
+            status_obj = elderly.status
+            text_out = {
+                "elderly_id:": elderly.elderly_id,
+                "name": elderly.name,
+                "emailaddress": elderly.emailaddress,
+                "password": elderly.password,
+                "hobbies": elderly.hobbies,
+            }
+            session.close()
+            return jsonify(text_out), 200
+        else:
+            session.close()
+            return jsonify({'message': f'There is no elderly with id {d_id}'}), 404
 
     #Onno: I changed the id's to elderly_id, renamed the DAO to ElderlyDAO and added a delete function to app.py
     @staticmethod

@@ -12,38 +12,33 @@ class Caregiver:
     @staticmethod
     def create(body):
         session = Session()
-        caregiver = CaregiverDAO(body['caregiver_id'], body['name'], body['emailaddress'], body['password'])
+        caregiver = CaregiverDAO(body['caregiver_id'], body['name'], body['emailaddress'], body['password'], body['hobbies'])
         session.add(caregiver)
         session.commit()
         session.refresh(caregiver)
         session.close()
         return jsonify({'caregiver_id': caregiver.caregiver_id}), 200
 
-    # @staticmethod
-    # def get(d_id):
-    #     session = Session()
-    #     # https://docs.sqlalchemy.org/en/14/orm/query.html
-    #     # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-    #     caregiver = session.query(caregiverDAO).filter(caregiverDAO.id == d_id).first()
+    @staticmethod
+    def get(d_id):
+        session = Session()
+        # https://docs.sqlalchemy.org/en/14/orm/query.html
+        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
+        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.id == d_id).first()
 
-    #     if caregiver:
-    #         status_obj = caregiver.status
-    #         text_out = {
-    #             "caregiver_id:": caregiver.caregiver_id,
-    #             "name": caregiver.name,
-    #             "emailaddress": caregiver.emailaddress,
-    #             "order_time": caregiver.order_time.isoformat(),
-    #             "caregiver_time": caregiver.caregiver_time.isoformat(),
-    #             "status": {
-    #                 "status": status_obj.status,
-    #                 "last_update": status_obj.last_update.isoformat(),
-    #             }
-    #         }
-    #         session.close()
-    #         return jsonify(text_out), 200
-    #     else:
-    #         session.close()
-    #         return jsonify({'message': f'There is no caregiver with id {d_id}'}), 404
+        if caregiver:
+            text_out = {
+                "caregiver_id:": caregiver.caregiver_id,
+                "name": caregiver.name,
+                "emailaddress": caregiver.emailaddress,
+                "password": caregiver.password,
+                "hobbies": caregiver.hobbies,
+            }
+            session.close()
+            return jsonify(text_out), 200
+        else:
+            session.close()
+            return jsonify({'message': f'There is no caregiver with id {d_id}'}), 404
 
     #Onno: I changed the id's to caregiver_id, renamed the DAO to CaregiverDAO and added a delete function to app.py
     @staticmethod
