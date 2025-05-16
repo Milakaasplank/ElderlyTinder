@@ -10,10 +10,13 @@ class MatchDAO(Base):
     match_id = Column(Integer, primary_key=True)  # Auto generated primary key
     elderly_id = Column(Integer, ForeignKey('elderly.elderly_id'))
     caregiver_id = Column(Integer, ForeignKey('caregiver.caregiver_id'))
-    status = Column(String)
+    status_caregiver = Column(String, default="PENDING")
+    status_elderly = Column(String, default="PENDING")
 
-    def __init__(self, match_id, status, elderly_id, caregiver_id):
+    def __init__(self, match_id, status_elderly, status_caregiver, elderly_id, caregiver_id):
         self.match_id = match_id
         self.elderly_id = elderly_id
         self.caregiver_id = caregiver_id
-        self.status = status
+        self.status_elderly = status_elderly
+        self.status_caregiver = status_caregiver
+

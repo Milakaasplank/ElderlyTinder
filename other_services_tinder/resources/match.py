@@ -31,7 +31,6 @@ class Match:
         if match:
             text_out = {
                 "match_id:": match.match_id,
-                "status": match.status,
             }
             session.close()
             return jsonify(text_out), 200
@@ -62,7 +61,7 @@ class Match:
             session.close()
             return jsonify({"message": "Not enough data to create a match"}), 400
 
-        match = MatchDAO(elderly.id, caregiver.id, status="CREATED")
+        match = MatchDAO(elderly.id, caregiver.id, status_caregiver="CREATED")
         session.add(match)
         session.commit()
         session.refresh(match)
@@ -72,7 +71,8 @@ class Match:
             "match_id": match.match_id,
             "elderly_id": match.elderly_id,
             "caregiver_id": match.caregiver_id,
-            "status": match.status
+            "status_elderly": match.status_elderly,
+            "status_caregiver": match.status_caregiver,
         }), 200
     
     @staticmethod
@@ -100,7 +100,7 @@ class Match:
         }), 200
     
     @staticmethod
-    def decide(match_id, body):
+    def decide_caregiver(match_id, body):
         session = Session()
 
         match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
@@ -115,9 +115,9 @@ class Match:
 
         # Set status based on decision
         if decision is True:
-            match.status = "ACCEPTED"
+            match.status_caregiver = "ACCEPTED"
         elif decision is False:
-            match.status = "DECLINED"
+            match.status_caregiver = "DECLINED"
         else:
             session.close()
             return jsonify({'message': 'Decision must be true or false'}), 400
@@ -128,5 +128,118 @@ class Match:
 
         return jsonify({
             'message': f'Match {match.match_id} has been {"accepted" if decision else "declined"}',
-            'status': match.status
+            'status': match.status_caregiver
         }), 200
+    
+    @staticmethod
+    def reject(match_id):
+        session = Session()
+
+        match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
+        if not match:
+            session.close()
+            return jsonify({'message': f'Match {match_id} not found'}), 404
+
+        match.status_caregiver = "REJECTED"
+        session.commit()
+        session.refresh(match)
+        session.close()
+
+        return jsonify({
+            'message': f'Match {match.match_id} has been rejected',
+            'status': match.status_caregiver
+        }), 200
+
+    @staticmethod
+    def accept_caregiver(match_id):
+        session = Session()
+
+        match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
+        if not match:
+            session.close()
+            return jsonify({'message': f'Match {match_id} not found'}), 404
+
+        match.status_caregiver = "ACCEPTED"
+        session.commit()
+        session.refresh(match)
+        session.close()
+
+        return jsonify({
+            'message': f'Match {match.match_id} has been accepted',
+            'status': match.status_caregiver
+        }), 200
+
+    @staticmethod
+    def notify_elderly(match_id):
+        session = Session()
+
+        match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
+        if not match:
+            session.close()
+            return jsonify({'message': f'Match {match_id} not found'}), 404
+
+        from daos.elderly_dao import ElderlyDAO
+        from daos.caregiver_dao import CaregiverDAO
+
+        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == match.elderly_id).first()
+        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.id == match.caregiver_id).first()
+
+        if not elderly or not caregiver:
+            session.close()
+            return jsonify({'message': 'Elderly or caregiver not found'}), 404
+
+        # Update status_elderly
+        match.status_elderly = "NOTIFIED"
+        session.commit()
+
+        print(f"[NOTIFY] Elderly {elderly.name} notified of match with caregiver {caregiver.name}")
+
+        session.refresh(match)
+        session.close()
+
+        return jsonify({
+            'message': f'Elderly {elderly.name} notified about match',
+            'status_elderly': match.status_elderly
+        }), 200
+    
+    @staticmethod
+    def elderly_accept(match_id):
+        session = Session()
+
+        match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
+        if not match:
+            session.close()
+            return jsonify({'message': f'Match {match_id} not found'}), 404
+
+        match.status_elderly = "ACCEPTED"
+        session.commit()
+        session.refresh(match)
+        session.close()
+
+        return jsonify({
+            'message': f'Elderly has accepted match {match.match_id}',
+            'status_elderly': match.status_elderly
+        }), 200
+
+
+    @staticmethod
+    def elderly_reject(match_id):
+        session = Session()
+
+        match = session.query(MatchDAO).filter(MatchDAO.match_id == match_id).first()
+        if not match:
+            session.close()
+            return jsonify({'message': f'Match {match_id} not found'}), 404
+
+        match.status_elderly = "REJECTED"
+        session.commit()
+        session.refresh(match)
+        session.close()
+
+        return jsonify({
+            'message': f'Elderly has rejected match {match.match_id}',
+            'status_elderly': match.status_elderly
+        }), 200
+
+
+

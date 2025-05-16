@@ -51,7 +51,28 @@ def notify_match(match_id):
 @app.route("/match/<int:match_id>/decide", methods=["POST"])
 def decide_match(match_id):
     body = request.get_json()
-    return Match.decide(match_id, body)
+    return Match.decide_caregiver(match_id, body)
+
+@app.route("/match/<int:match_id>/reject", methods=["POST"])
+def reject_match(match_id):
+    return Match.reject(match_id)
+
+@app.route("/match/<int:match_id>/accept", methods=["POST"])
+def accept_match(match_id):
+    return Match.accept_caregiver(match_id)
+
+@app.route("/match/<int:match_id>/notify_elderly", methods=["POST"])
+def notify_elderly(match_id):
+    return Match.notify_elderly(match_id)
+
+@app.route("/match/<int:match_id>/elderly_accept", methods=["POST"])
+def elderly_accept(match_id):
+    return Match.elderly_accept(match_id)
+
+@app.route("/match/<int:match_id>/elderly_reject", methods=["POST"])
+def elderly_reject(match_id):
+    return Match.elderly_reject(match_id)
+
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
