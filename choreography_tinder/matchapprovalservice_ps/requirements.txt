@@ -1,6 +1,3 @@
-flask
-sqlalchemy
-sqlalchemy-utils
-sqlalchemy-bigquery
 random
 json
+google-cloud-pubsub
