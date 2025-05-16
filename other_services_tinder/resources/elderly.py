@@ -24,10 +24,9 @@ class Elderly:
         session = Session()
         # https://docs.sqlalchemy.org/en/14/orm/query.html
         # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == d_id).first()
+        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.elderly_id == d_id).first()
 
         if elderly:
-            status_obj = elderly.status
             text_out = {
                 "elderly_id:": elderly.elderly_id,
                 "name": elderly.name,

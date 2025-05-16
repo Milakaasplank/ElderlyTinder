@@ -24,7 +24,7 @@ class Caregiver:
         session = Session()
         # https://docs.sqlalchemy.org/en/14/orm/query.html
         # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.id == d_id).first()
+        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.caregiver_id == d_id).first()
 
         if caregiver:
             text_out = {
