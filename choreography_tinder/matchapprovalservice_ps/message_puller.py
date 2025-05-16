@@ -1,4 +1,3 @@
-# choreography/matchapprovalservice_ps/message_puller.py
 
 import json
 import logging
@@ -52,9 +51,9 @@ def handle_match_approved_by_caregiver(message):
 
     # Simulate notifying elderly
     publish_message(PROJECT_ID, TOPIC_NOTIFY_ELDERLY, json.dumps(data), event_type="NotifyElderly")
-
     # Simulate elderly decision
     elderly_accepts = random.choice([True, False])
+
 
     if elderly_accepts:
         event = {
@@ -96,7 +95,6 @@ def start():
             pass
     except KeyboardInterrupt:
         print("Stopped.")
-
 
 if __name__ == "__main__":
     start()
