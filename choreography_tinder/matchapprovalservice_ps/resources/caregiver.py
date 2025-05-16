@@ -17,6 +17,11 @@ caregivers = [
         "caregiver_id": "CG003",
         "name": "Priya Nair",
         "email": "priya.nair@example.com"
+    },
+    {
+        "caregiver_id": "CG004",
+        "name": "Eren Ozol",
+        "email": "erenozol@example.com"
     }
 ]
 

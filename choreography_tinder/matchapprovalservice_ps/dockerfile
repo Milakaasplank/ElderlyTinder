@@ -1,0 +1,11 @@
+# choreography/matchapprovalservice_ps/Dockerfile
+
+FROM python:3.10.7-slim
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "message_puller.py"]
