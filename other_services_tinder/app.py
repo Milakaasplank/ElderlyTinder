@@ -5,6 +5,7 @@ from flask import Flask, request
 from db import Base, engine
 from resources.elderly import Elderly
 from resources.caregiver import Caregiver
+from resources.match import Match
 # from resources.status import Status
 
 app = Flask(__name__)
@@ -30,19 +31,6 @@ def get_elderly(d_id):
 def get_caregiver(d_id):
     return Caregiver.get(d_id)
 
-# TODO: i think we can use this to update the hobbies of the elderly: Jessie
-# @app.route('/deliveries/<d_id>/status', methods=['PUT'])
-# def update_elderly_status(d_id):
-#     status = request.args.get('status')
-#     return Status.update(d_id, status)
-
-# TODO: i think we can use this to update the hobbies of the elderly: Aurelia
-# @app.route('/deliveries/<d_id>/status', methods=['PUT'])
-# def update_elderly_status(d_id):
-#     status = request.args.get('status')
-#     return Status.update(d_id, status)
-
-
 # --> Remove Elderly and Caregiver (by Onno), it says theres no delete function in Elderly and Caregiver but there definitely is.
 @app.route('/elderly/<elderly_id>', methods=['DELETE'])
 def delete_elderly(elderly_id):
@@ -51,6 +39,19 @@ def delete_elderly(elderly_id):
 @app.route('/caregiver/<caregiver_id>', methods=['DELETE'])
 def delete_caregiver(caregiver_id):
     return Caregiver.delete(caregiver_id)
+
+@app.route("/match/random", methods=["POST"])
+def create_random_match():
+    return Match.create_random()
+
+@app.route("/match/<int:match_id>/notify", methods=["POST"])
+def notify_match(match_id):
+    return Match.notify(match_id)
+
+@app.route("/match/<int:match_id>/decide", methods=["POST"])
+def decide_match(match_id):
+    body = request.get_json()
+    return Match.decide(match_id, body)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
