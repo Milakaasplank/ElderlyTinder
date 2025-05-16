@@ -37,3 +37,12 @@ gcloud compute instances ops-agents policies create goog-ops-agent-v2-x86-templa
     --project=mythical-lens-450121-n0 \
     --zone=us-central1-c \
     --file=config.yaml
+
+2. Sudo apt install git
+3. git clone https://github.com/Milakaasplank/ElderlyTinder
+4. cd installation_script
+5. sh docker.sh
+6. sh docker_compose.sh
+7. gcloud compute firewall-rules create flask-port-1 --allow tcp:5000
+gcloud compute firewall-rules create flask-port-2 --allow tcp:5001
+8. 
