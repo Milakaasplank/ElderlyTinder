@@ -176,3 +176,4 @@ cython_debug/
 
 #Key File for Google Cloud
 \choreography_tinder\matchapprovalservice_ps\key.json
+choreography_tinder/matchapprovalservice_ps/key.json
