@@ -1,11 +1,18 @@
-# choreography/matchapprovalservice_ps/Dockerfile
+# Base image
+FROM python:3.10-slim
 
-FROM python:3.10.7-slim
-
+# Set work directory
 WORKDIR /app
 
-COPY . /app
+# Copy everything
+COPY . .
 
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Set environment variable (you'll mount key at runtime)
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/key.json"
+
+# Run the match event listener by default
 CMD ["python", "message_puller.py"]
+
