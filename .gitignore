@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+#Key File for Google Cloud
+\choreography_tinder\matchapprovalservice_ps\key.json
+choreography_tinder/matchapprovalservice_ps/key.json
