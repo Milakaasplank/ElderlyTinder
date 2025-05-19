@@ -38,11 +38,13 @@ gcloud compute instances ops-agents policies create goog-ops-agent-v2-x86-templa
     --zone=us-central1-c \
     --file=config.yaml
 
-2. Sudo apt install git
+2. sudo apt install git
 3. git clone https://github.com/Milakaasplank/ElderlyTinder
-4. cd installation_script
+4. cd ElderlyTinder/installation_script
 5. sh docker.sh
 6. sh docker_compose.sh
 7. gcloud compute firewall-rules create flask-port-1 --allow tcp:5000
 gcloud compute firewall-rules create flask-port-2 --allow tcp:5001
-8. 
+8. cd ..
+9. cd other_services_tinder
+10. sudo docker build -t elderlytinder:0.0.1 .
