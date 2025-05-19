@@ -84,8 +84,8 @@ class Match:
             session.close()
             return jsonify({'message': f'Match {match_id} not found'}), 404
 
-        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.id == match.caregiver_id).first()
-        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == match.elderly_id).first()
+        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.caregiver_id == match.caregiver_id).first()
+        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.elderly_id == match.elderly_id).first()
 
         if not caregiver or not elderly:
             session.close()
@@ -181,8 +181,8 @@ class Match:
         from daos.elderly_dao import ElderlyDAO
         from daos.caregiver_dao import CaregiverDAO
 
-        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.id == match.elderly_id).first()
-        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.id == match.caregiver_id).first()
+        elderly = session.query(ElderlyDAO).filter(ElderlyDAO.elderly_id == match.elderly_id).first()
+        caregiver = session.query(CaregiverDAO).filter(CaregiverDAO.caregiver_id == match.caregiver_id).first()
 
         if not elderly or not caregiver:
             session.close()
