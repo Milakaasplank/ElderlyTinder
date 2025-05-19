@@ -13,28 +13,21 @@ app.config["DEBUG"] = True
 Base.metadata.create_all(engine)
 
 
-@app.route('/addelderly', methods=['POST'])
-def create_elderly():
-    req_data = request.get_json()
-    return Elderly.create(req_data)
+
 
 @app.route('/addcaregiver', methods=['POST'])
 def create_caregiver():
     req_data = request.get_json()
     return Caregiver.create(req_data)
 
-@app.route('/getelderly/<d_id>', methods=['GET'])
-def get_elderly(d_id):
-    return Elderly.get(d_id)
+
 
 @app.route('/getcaregiver/<d_id>', methods=['GET'])
 def get_caregiver(d_id):
     return Caregiver.get(d_id)
 
 # --> Remove Elderly and Caregiver (by Onno), it says theres no delete function in Elderly and Caregiver but there definitely is.
-@app.route('/elderly/<elderly_id>', methods=['DELETE'])
-def delete_elderly(elderly_id):
-    return Elderly.delete(elderly_id)
+
 
 @app.route('/caregiver/<caregiver_id>', methods=['DELETE'])
 def delete_caregiver(caregiver_id):
