@@ -48,3 +48,5 @@ gcloud compute firewall-rules create flask-port-2 --allow tcp:5001
 8. cd ..
 9. cd other_services_tinder
 10. sudo docker build -t elderlytinder:0.0.1 .
+11. sudo docker run -p 5000:5000 -d --name=elderlytinder elderlytinder:0.0.1
+12. sudo docker start elderlytinder

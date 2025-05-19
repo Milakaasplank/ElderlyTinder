@@ -61,7 +61,7 @@ class Match:
             session.close()
             return jsonify({"message": "Not enough data to create a match"}), 400
 
-        match = MatchDAO(elderly.id, caregiver.id, status_caregiver="CREATED")
+        match = MatchDAO(elderly.elderly_id, caregiver.caregiver_id, status_caregiver="CREATED")
         session.add(match)
         session.commit()
         session.refresh(match)
