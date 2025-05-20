@@ -3,7 +3,7 @@ import os
 from flask import Flask, request
 
 from db import Base, engine
-from resources.elderly import Elderly
+# from resources.elderly import Elderly
 from caregiver_services.resources.caregiver import Caregiver
 from resources.match import Match
 # from resources.status import Status
@@ -15,23 +15,23 @@ Base.metadata.create_all(engine)
 
 
 
-@app.route('/addcaregiver', methods=['POST'])
-def create_caregiver():
-    req_data = request.get_json()
-    return Caregiver.create(req_data)
+# @app.route('/addcaregiver', methods=['POST'])
+# def create_caregiver():
+#     req_data = request.get_json()
+#     return Caregiver.create(req_data)
 
 
 
-@app.route('/getcaregiver/<d_id>', methods=['GET'])
-def get_caregiver(d_id):
-    return Caregiver.get(d_id)
+# @app.route('/getcaregiver/<d_id>', methods=['GET'])
+# def get_caregiver(d_id):
+#     return Caregiver.get(d_id)
 
 # --> Remove Elderly and Caregiver (by Onno), it says theres no delete function in Elderly and Caregiver but there definitely is.
 
 
-@app.route('/caregiver/<caregiver_id>', methods=['DELETE'])
-def delete_caregiver(caregiver_id):
-    return Caregiver.delete(caregiver_id)
+# @app.route('/caregiver/<caregiver_id>', methods=['DELETE'])
+# def delete_caregiver(caregiver_id):
+#     return Caregiver.delete(caregiver_id)
 
 @app.route("/match/random", methods=["POST"])
 def create_random_match():
