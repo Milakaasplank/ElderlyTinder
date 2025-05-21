@@ -45,17 +45,18 @@ gcloud compute instances ops-agents policies create goog-ops-agent-v2-x86-templa
 6. sh docker_compose.sh
 7. gcloud compute firewall-rules create flask-port-1 --allow tcp:5000
 gcloud compute firewall-rules create flask-port-2 --allow tcp:5001
+gcloud compute firewall-rules create flask-port-2 --allow tcp:5002
 8. cd ..
 9. cd other_services_tinder
 
-10. sudo docker build -t elderlytinder:0.0.1 .
+<!-- 10. sudo docker build -t elderlytinder:0.0.1 . -->
 10. sudo docker build -t caregiver:0.0.1 .
 10. sudo docker build -t elderly:0.0.1 .
 
 
-11. sudo docker run -p 5000:5000 -d --name=elderlytinder elderlytinder:0.0.1
+<!-- 11. sudo docker run -p 5002:5000 -d --name=elderlytinder elderlytinder:0.0.1 -->
 11. sudo docker run -p 5000:5000 -d --name=caregiver caregiver:0.0.1
-11. sudo docker run -p 5000:5000 -d --name=elderly elderly:0.0.1
+11. sudo docker run -p 5001:5000 -d --name=elderly elderly:0.0.1
 
 
 12. sudo docker start elderlytinder
