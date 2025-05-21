@@ -2,9 +2,4 @@ flask
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
-random
-<<<<<<< Updated upstream
-json
-=======
->>>>>>> Stashed changes
 pytest

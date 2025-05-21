@@ -8,7 +8,7 @@ from daos.elderly_dao import ElderlyDAO
 from db import Session
 
 # We import this to make it adhere to the FaaS structure
-from elderly_service import get_elderly_user
+from get_elderly_service import get_elderly_user
 
 class Elderly:
     @staticmethod
@@ -24,8 +24,8 @@ class Elderly:
     # Onno: Code from here to line 28 is used to convert 'get' to FaaS
     @staticmethod
     def get(d_id):
-    response, status_code = get_elderly_user(d_id)
-    return jsonify(response), status_code
+        response, status_code = get_elderly_user(d_id)
+        return jsonify(response), status_code
 
     #Onno: Old get method, commented since we wanted to change it to FaaS 
 
