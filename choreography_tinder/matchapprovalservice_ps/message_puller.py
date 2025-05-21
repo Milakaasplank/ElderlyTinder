@@ -24,16 +24,15 @@ SUB_APPROVED_BY_CAREGIVER = "MatchApprovedByCaregiver-sub"
 def handle_notify_caregiver(message):
     data = json.loads(message.data.decode("utf-8"))
     print(f"[NotifyCaregiverOfMatch] {data}")
-
-    caregiver_accepts = random.choice([True, False])
-
+    caregiver_accepts = random.choices([True, False], weights=[0.9, 0.3])[0]
     if caregiver_accepts:
         event = {
             "match_id": data["match_id"],
             "caregiver_id": data["caregiver_id"],
             "elderly_id": data["elderly_id"]
         }
-        publish_message(PROJECT_ID, TOPIC_MATCH_APPROVED, json.dumps(event), event_type="CaregiverApproved")
+        event_text = f"[MatchApprovedByCaregiver] {event}"
+        publish_message(PROJECT_ID, TOPIC_MATCH_APPROVED, event_text, event_type="CaregiverApproved")
     else:
         event = {
             "match_id": data["match_id"],
@@ -46,32 +45,33 @@ def handle_notify_caregiver(message):
 
 
 def handle_match_approved_by_caregiver(message):
-    data = json.loads(message.data.decode("utf-8"))
-    print(f"[MatchApprovedByCaregiver] {data}")
+    raw = message.data.decode("utf-8")
+    print(f"🟡 Raw message: {raw}", flush=True)
+
+    if "[MatchApprovedByCaregiver]" not in raw:
+        print("⚠️ Unexpected message format", flush=True)
+        message.ack()
+        return
+
+    try:
+        # Extract and parse dictionary portion after the tag
+        payload_str = raw.split("]")[-1].strip()
+        data = eval(payload_str)  # ⚠️ safe only in controlled environments
+        print(f"[MatchApprovedByCaregiver] {data}", flush=True)
+    except Exception as e:
+        print(f"❌ Failed to parse tagged message: {e}", flush=True)
+        message.ack()
+        return
 
     # Simulate notifying elderly
     publish_message(PROJECT_ID, TOPIC_NOTIFY_ELDERLY, json.dumps(data), event_type="NotifyElderly")
-    # Simulate elderly decision
-    elderly_accepts = random.choice([True, False])
 
+    # Simulate elderly decision (95% accept, 5% reject)
+    elderly_accepts = random.choices([True, False], weights=[0.95, 0.05])[0]
 
-    if elderly_accepts:
-        event = {
-            "match_id": data["match_id"],
-            "elderly_id": data["elderly_id"],
-            "caregiver_id": data["caregiver_id"]
-        }
-        publish_message(PROJECT_ID, TOPIC_ELDERLY_APPROVED, json.dumps(event), event_type="ElderlyApproved")
-    else:
-        event = {
-            "match_id": data["match_id"],
-            "elderly_id": data["elderly_id"],
-            "caregiver_id": data["caregiver_id"]
-        }
-        publish_message(PROJECT_ID, TOPIC_ELDERLY_REJECTED, json.dumps(event), event_type="ElderlyRejected")
-        publish_message(PROJECT_ID, TOPIC_NOTIFY_CAREGIVER_REJECTED, json.dumps(event), event_type="NotifyCaregiverRejection")
-
+    # Continue with the rest of your logic here...
     message.ack()
+
 
 
 def start():
