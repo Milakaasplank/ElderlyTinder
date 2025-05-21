@@ -3,9 +3,9 @@ import os
 from flask import Flask, request
 
 from db import Base, engine
-from resources.elderly import Elderly
-from caregiver_services.resources.caregiver import Caregiver
-from resources.match import Match
+# from resources.elderly import Elderly
+# from caregiver_services.resources.caregiver import Caregiver
+# from resources.match import Match
 from resources.caregiver import Caregiver
 # from resources.status import Status
 
