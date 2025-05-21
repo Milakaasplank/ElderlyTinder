@@ -23,7 +23,7 @@ def get_elderly(d_id):
 
 @app.route('/elderly/<elderly_id>', methods=['DELETE'])
 def delete_elderly(elderly_id):
-    return Elderly.delete(elderly_id)
+   return Elderly.delete(elderly_id)
     
 
 if __name__ == '__main__':
